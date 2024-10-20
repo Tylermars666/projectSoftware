@@ -4,6 +4,7 @@ import co.edu.uniquindio.ingsoftwareproject.model.classes.Usuario;
 import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoUsuario;
 import co.edu.uniquindio.ingsoftwareproject.repository.Singleton;
 import co.edu.uniquindio.ingsoftwareproject.repository.implement.UserRepoImpl;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -42,6 +43,9 @@ public class UsuarioTest {
 
         Singleton.getInstance().crear("notificacion",new Notificacion("888","666","Jaimito","Me enfermé de lepra",
                 LocalDateTime.now()));
+
+        Singleton.getInstance().crear("user",new Usuario("1717","Omar","Santander","3207368522", TipoUsuario.ADMINISTRADOR,
+                "imagen2Huella",null,"omar","0000"));
 
 
     }
@@ -93,6 +97,20 @@ public class UsuarioTest {
         System.out.println(fecha.getMonthValue());
 
     }
+
+    @Test
+    public void stringAFecha(){
+
+
+        LocalDateTime fecha1 = LocalDateTime.now();
+        System.out.println(fecha1);
+
+        LocalDateTime fecha2 = LocalDateTime.parse("2024-10-20T"+"16:31:06");
+        System.out.println(fecha2);
+
+    }
+
+
 
 
 }

@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ingsoftwareproject;
 
+
+import co.edu.uniquindio.ingsoftwareproject.controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +17,10 @@ public class SalaryApp extends Application {
         stage.setTitle("App");
         stage.setScene(scene);
         stage.show();
+        LoginController controller = fxmlLoader.getController();
+        controller.setLoginStage(stage);
+
+
     }
 
     public static void main(String[] args) {

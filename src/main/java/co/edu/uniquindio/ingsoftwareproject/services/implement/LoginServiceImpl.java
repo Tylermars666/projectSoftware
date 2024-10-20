@@ -14,6 +14,12 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String login(String username, String password) throws Exception {
 
+        if(username.isBlank() || password.isBlank()){
+
+            throw new Exception("No se llenaron todos los campos del login");
+
+        }
+
         Usuario usuario = userRepo.findByUsername(username);
         if(usuario==null){
             throw new Exception("Usuario no encontrado");
@@ -27,6 +33,6 @@ public class LoginServiceImpl implements LoginService {
 
         UsuarioLoggeado.getInstance().setRut(usuario.getRut());
 
-        return "Usuario loggeado con exito";
+        return usuario.getTipo().toString();
     }
 }

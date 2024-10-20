@@ -14,7 +14,7 @@ public interface AdminService {
     public List<ControlTimexDTO> listarEmpleadosPorRut(String rut)throws Exception;
     public String registrarEmpleado(CrearEmpleadoDTO crearEmpleadoDTO)throws Exception;
     public String actualizarEmpleado(ActualizarEmpleadoDTO actualizarEmpleadoDTO)throws Exception;
-    public ReporteDto generarReporte(String rut)throws Exception;
+    public ReporteDto generarReporte(String rut, int mes)throws Exception;
     public List<NotificacionDTO> listarNotificaciones()throws Exception;
 
 

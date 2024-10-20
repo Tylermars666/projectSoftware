@@ -15,4 +15,8 @@ module co.edu.uniquindio.ingsoftwareproject {
     exports co.edu.uniquindio.ingsoftwareproject.repository.implement;
     exports co.edu.uniquindio.ingsoftwareproject.repository.interfaces;
     exports co.edu.uniquindio.ingsoftwareproject.services.implement;
+    exports co.edu.uniquindio.ingsoftwareproject.dto.adminDto;
+    exports co.edu.uniquindio.ingsoftwareproject.dto.userDto;
+    exports co.edu.uniquindio.ingsoftwareproject.dto.registroDto;
+    exports co.edu.uniquindio.ingsoftwareproject.services.interfaces;
 }
