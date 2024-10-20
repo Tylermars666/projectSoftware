@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.ingsoftwareproject.controller.UserController">
+    <children>
+        <TabPane layoutX="-1.0" layoutY="-1.0" prefHeight="400.0" prefWidth="656.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+
+                <!-- Tab 2: Horas Laboradas -->
+                <Tab text="Horas Laboradas">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="359.0" prefWidth="600.0">
+                            <children>
+                                <!-- ComboBox para seleccionar el mes -->
+                                <ComboBox fx:id="cmbMesLaborado" layoutX="50.0" layoutY="20.0" onAction="#filtroSeleccionMesLaborados" prefWidth="150.0" promptText="Seleccionar Mes" />
+
+                                <!-- Tabla para mostrar las horas trabajadas -->
+                                <TableView fx:id="horasTable" layoutX="50.0" layoutY="60.0" prefHeight="250.0" prefWidth="500.0">
+                                    <columns>
+                                        <TableColumn fx:id="callFechaLaborada" prefWidth="100.0" text="Fecha" />
+                                        <TableColumn fx:id="callHoraEntradaLaborada" prefWidth="150.0" text="Hora Entrada" />
+                                        <TableColumn fx:id="callHoraSalidaLaborada" prefWidth="150.0" text="Hora Salida" />
+                                        <TableColumn fx:id="callTotalHorasLaboradas" prefWidth="100.0" text="Total Horas" />
+                                    </columns>
+                                </TableView>
+
+                                <!-- Botón para generar reporte -->
+                                <Button layoutX="400.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnGenerarReporteHorasLaboradas" text="Generar Reporte" />
+                        <Button fx:id="btnConsultar" layoutX="223.0" layoutY="20.0" mnemonicParsing="false" text="consultar" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- Tab 3: Notificaciones -->
+                <Tab text="Notificaciones">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="359.0" prefWidth="600.0">
+                            <children>
+                                <TextField fx:id="txtJustificacionNotificacion" editable="false" layoutX="41.0" layoutY="107.0" prefHeight="97.0" prefWidth="500.0" />
+                        <Line endX="250.79998779296875" endY="-1.1444091796875E-5" layoutX="142.0" layoutY="49.0" startX="-100.0" />
+                        <Label layoutX="41.0" layoutY="32.0" text="Notificacion" />
+                        <Label layoutX="41.0" layoutY="81.0" text="Justificacion de la Notificacion:" />
+                        <Button layoutX="270.0" layoutY="272.0" mnemonicParsing="false" onAction="#btnEnviarNotificacionEmpleado" text="Enviar Notificacion" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
