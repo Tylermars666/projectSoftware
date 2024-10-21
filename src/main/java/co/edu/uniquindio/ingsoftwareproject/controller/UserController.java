@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ingsoftwareproject.controller;
 
 import co.edu.uniquindio.ingsoftwareproject.dto.registroDto.RegistroClienteDTO;
+import co.edu.uniquindio.ingsoftwareproject.dto.userDto.ReporteDto;
 import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.UserServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.UserService;
@@ -11,29 +12,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.Setter;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @Setter
 public class UserController implements Initializable {
 
-
     private UserService userService = new UserServiceImpl();
-    private Stage userStage;
-
-    @FXML
-    private Button btnConsultar;
     @FXML
     private TableColumn<RegistroClienteDTO, String> callFechaLaborada;
     @FXML
@@ -50,7 +46,9 @@ public class UserController implements Initializable {
     private TextField txtJustificacionNotificacion;
 
     private ObservableList<RegistroClienteDTO> registros;
+
     private ObservableList<String> opcionesMeses;
+
     private String mesSeleccionado;
 
     @FXML
@@ -66,19 +64,40 @@ public class UserController implements Initializable {
             try{
                 String response = userService.enviarNotificacion(UsuarioLoggeado.instance.getRut(), justificacion);
                 Alertas.alertar(TipoAlerta.INFORMATION,"Notificación",response);
+                this.txtJustificacionNotificacion.setText("");
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
-
-
-
-
     }
 
     @FXML
     void btnGenerarReporteHorasLaboradas(ActionEvent event) {
+
+        if(mesSeleccionado==null){
+
+            Alertas.alertar(TipoAlerta.ERROR,"Mes seleccionado", "Primero debe seleccionar un mes");
+
+        }else{
+            try{
+
+                ReporteDto reporteDto = userService.generarReporte(UsuarioLoggeado.instance.getRut(),Integer.parseInt(mesSeleccionado));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/ingsoftwareproject/view/reporte-view.fxml"));
+
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Reporte");
+                stage.setScene(scene);
+                stage.show();
+                ReporteController controller = loader.getController();
+                controller.settearReporte(reporteDto);
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
@@ -99,6 +118,19 @@ public class UserController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    void reset(ActionEvent event) {
+
+        mesSeleccionado=null;
+
+        try{
+            actualizarTabla("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

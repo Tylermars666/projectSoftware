@@ -37,6 +37,7 @@
                                 <!-- Botón para generar reporte -->
                                 <Button layoutX="400.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnGenerarReporteHorasLaboradas" text="Generar Reporte" />
                         <Button fx:id="btnConsultar" layoutX="223.0" layoutY="20.0" mnemonicParsing="false" onAction="#consultarRegistrosPorMes" text="consultar" />
+                        <Button layoutX="302.0" layoutY="20.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
                             </children>
                         </AnchorPane>
                     </content>

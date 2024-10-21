@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Registro implements Serializable {
 
     @Serial
@@ -20,6 +19,11 @@ public class Registro implements Serializable {
     private LocalDateTime entrada;
     private LocalDateTime salida;
 
+    public Registro(){
+
+        entrada = LocalDateTime.parse("0000-00-00T00:00:00");
+        salida = LocalDateTime.parse("0000-00-00T00:00:00");
+    }
 
     public int getTotalHoras(){
 
