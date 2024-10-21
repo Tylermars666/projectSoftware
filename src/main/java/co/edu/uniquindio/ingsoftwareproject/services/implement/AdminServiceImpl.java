@@ -8,13 +8,14 @@ import co.edu.uniquindio.ingsoftwareproject.dto.userDto.ReporteDto;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Notificacion;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Registro;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Usuario;
+import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
 import co.edu.uniquindio.ingsoftwareproject.repository.implement.NotificacionRepoImpl;
 import co.edu.uniquindio.ingsoftwareproject.repository.implement.UserRepoImpl;
 import co.edu.uniquindio.ingsoftwareproject.repository.interfaces.NotificacionRepo;
 import co.edu.uniquindio.ingsoftwareproject.repository.interfaces.UserRepo;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.AdminService;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.UserService;
-import javafx.util.converter.LocalDateTimeStringConverter;
+import co.edu.uniquindio.ingsoftwareproject.user.Alertas;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class AdminServiceImpl implements AdminService {
 
         if(!(usuarioDB == null)){
 
+            Alertas.alertar(TipoAlerta.ERROR,"Error de datos","Ya existe un empleado con ese rut");
             throw new Exception("Ya existe un empleado con ese rut");
 
         }
@@ -67,6 +69,7 @@ public class AdminServiceImpl implements AdminService {
         Usuario usuarioDB = userRepo.findByRut(actualizarEmpleadoDTO.rut());
 
         if(usuarioDB == null){
+            Alertas.alertar(TipoAlerta.ERROR,"Error de datos","No existe un empleado con ese rut");
             throw new Exception("No existe un empleado con ese rut: " + actualizarEmpleadoDTO.rut());
         }
 

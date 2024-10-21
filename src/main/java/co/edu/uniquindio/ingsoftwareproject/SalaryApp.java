@@ -14,7 +14,7 @@ public class SalaryApp extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SalaryApp.class.getResource("view/login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("App");
+        stage.setTitle("SalaryApp");
         stage.setScene(scene);
         stage.show();
         LoginController controller = fxmlLoader.getController();
