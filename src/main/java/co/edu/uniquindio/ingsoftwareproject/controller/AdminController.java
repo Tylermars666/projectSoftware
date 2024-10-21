@@ -93,6 +93,7 @@ public class AdminController implements Initializable {
 
     ObservableList<String> tipoUsuarios;
     ObservableList<ControlTimexDTO> registrosTimex;
+    ObservableList<NotificacionDTO> notificaciones;
     String tipoSeleccionado;
     AdminService adminService = new AdminServiceImpl();
     UserService userService = new UserServiceImpl();
@@ -250,6 +251,7 @@ public class AdminController implements Initializable {
 
         try{
             actualizarTablaTimeX("");
+            actualizarTablaNotificaciones();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -298,6 +300,24 @@ public class AdminController implements Initializable {
 
     public void actualizarTablaNotificaciones() throws Exception{
 
+        notificaciones = FXCollections.observableArrayList();
+
+        this.callRutNotificacion.setCellValueFactory(
+                (TableColumn.CellDataFeatures<NotificacionDTO,String> p) ->
+        new SimpleStringProperty(p.getValue().rut().toString())
+        );
+
+        this.callNombreNotificacion.setCellValueFactory(
+                (TableColumn.CellDataFeatures<NotificacionDTO,String> p) ->
+                        new SimpleStringProperty(p.getValue().nombre().toString())
+        );
+        this.callJustificacionNotificacion.setCellValueFactory(
+                (TableColumn.CellDataFeatures<NotificacionDTO,String> p) ->
+                        new SimpleStringProperty(p.getValue().justificacion().toString())
+        );
+
+        this.notificaciones.addAll(adminService.listarNotificaciones());
+        this.tblValidacionIO1.setItems(notificaciones);
 
 
     }
