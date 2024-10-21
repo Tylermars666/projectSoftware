@@ -1,8 +1,10 @@
 package co.edu.uniquindio.ingsoftwareproject.controller;
 
 import co.edu.uniquindio.ingsoftwareproject.dto.registroDto.RegistroClienteDTO;
+import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.UserServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.UserService;
+import co.edu.uniquindio.ingsoftwareproject.user.Alertas;
 import co.edu.uniquindio.ingsoftwareproject.user.UsuarioLoggeado;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,8 +29,6 @@ import java.util.ResourceBundle;
 public class UserController implements Initializable {
 
 
-
-
     private UserService userService = new UserServiceImpl();
     private Stage userStage;
 
@@ -51,9 +51,29 @@ public class UserController implements Initializable {
 
     private ObservableList<RegistroClienteDTO> registros;
     private ObservableList<String> opcionesMeses;
+    private String mesSeleccionado;
 
     @FXML
     void btnEnviarNotificacionEmpleado(ActionEvent event) {
+
+        String justificacion = txtJustificacionNotificacion.getText();
+
+        if(justificacion==null || justificacion.isBlank()){
+
+            Alertas.alertar(TipoAlerta.ERROR,"Campo vacío","Asegurese de escribir un mensaje");
+
+        }else{
+            try{
+                String response = userService.enviarNotificacion(UsuarioLoggeado.instance.getRut(), justificacion);
+                Alertas.alertar(TipoAlerta.INFORMATION,"Notificación",response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+
+
 
     }
 
@@ -64,13 +84,21 @@ public class UserController implements Initializable {
 
     @FXML
     void filtroSeleccionMesLaborados(ActionEvent event) {
-
-        //Metodo del combobox para el filtro
+        mesSeleccionado = cmbMesLaborado.getSelectionModel().getSelectedItem();
     }
 
     @FXML
     void consultarRegistrosPorMes(ActionEvent event) {
 
+        if(mesSeleccionado==null){
+            Alertas.alertar(TipoAlerta.ERROR,"Error mes", "Primero debe seleccionar un mes");
+        }else{
+            try{
+                actualizarTabla(mesSeleccionado);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -114,6 +142,7 @@ public class UserController implements Initializable {
         if (mes.isBlank()) {
             this.registros.addAll(this.userService.listarRegistros(UsuarioLoggeado.getInstance().getRut()));
         } else {
+            this.registros.clear();
             this.registros.addAll(this.userService.listarRegistrosPorMes(Integer.parseInt(mes), UsuarioLoggeado.getInstance().getRut()));
         }
 

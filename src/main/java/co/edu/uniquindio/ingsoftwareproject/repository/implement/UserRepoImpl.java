@@ -46,6 +46,10 @@ public class UserRepoImpl implements UserRepo {
 
             return "Se ha sobreescrito el usuario con rut: "+ usuario.getRut();
 
+        }else{
+
+            singleton.crear("user", usuario);
+
         }
 
 

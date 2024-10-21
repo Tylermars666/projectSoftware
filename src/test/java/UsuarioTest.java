@@ -41,11 +41,16 @@ public class UsuarioTest {
         Singleton.getInstance().crear("user",new Usuario("666","Jaimito","cra 14","7327003", TipoUsuario.CLIENTE,
                 "imagen1Huella",null,"jaimito1","0000"));
 
-        Singleton.getInstance().crear("notificacion",new Notificacion("888","666","Jaimito","Me enfermé de lepra",
-                LocalDateTime.now()));
+        /*Singleton.getInstance().crear("notificacion",new Notificacion("888","666","Jaimito","Me enfermé de lepra",
+                LocalDateTime.now()));*/
 
         Singleton.getInstance().crear("user",new Usuario("1717","Omar","Santander","3207368522", TipoUsuario.ADMINISTRADOR,
                 "imagen2Huella",null,"omar","0000"));
+
+
+        Singleton.getInstance().crear("user",new Usuario("1718","Carlos","Tuluaquistán","Número privado", TipoUsuario.CLIENTE,
+                "ImagenHuella3",null,"carlos","0000"));
+
 
     }
 
@@ -72,11 +77,21 @@ public class UsuarioTest {
 
         ArrayList<Registro> registros = new ArrayList<>();
         registros.add(new Registro(LocalDateTime.now(),LocalDateTime.now().plusHours(8)));
+        registros.add(new Registro(LocalDateTime.parse("2024-09-20T"+"07:31:06"),LocalDateTime.parse("2024-09-20T"+"17:31:06")));
+        registros.add(new Registro(LocalDateTime.parse("2024-10-20T"+"07:31:06"),LocalDateTime.parse("2024-10-20T"+"17:31:06")));
+        registros.add(new Registro(LocalDateTime.parse("2024-08-20T"+"07:31:06"),LocalDateTime.parse("2024-08-20T"+"17:31:06")));
+        registros.add(new Registro(LocalDateTime.parse("2024-07-20T"+"07:31:06"),LocalDateTime.parse("2024-07-20T"+"17:31:06")));
 
-        String response = userRepo.save(new Usuario("666","Jaimito","cra 14","7327003", TipoUsuario.CLIENTE,
-                "imagen1Huella",registros,"jaimito1","0000"));
+        /*String response = userRepo.save(new Usuario("666","Jaimito","cra 14","7327003", TipoUsuario.CLIENTE,
+                "imagen1Huella",registros,"jaimito1","0000"));*/
 
-        System.out.println(response);
+        String response2 = userRepo.save(new Usuario("1718","Carlos","Tuluaquistán","Número privado", TipoUsuario.CLIENTE,
+                "ImagenHuella3",registros,"carlos","0000"));
+
+
+
+        //System.out.println(response);
+        System.out.println(response2);
 
 
     }
@@ -106,6 +121,11 @@ public class UsuarioTest {
 
         LocalDateTime fecha2 = LocalDateTime.parse("2024-10-20T"+"16:31:06");
         System.out.println(fecha2);
+
+        LocalDateTime fecha3 = LocalDateTime.now().minusHours(8);
+        System.out.println(fecha3);
+
+
 
     }
 

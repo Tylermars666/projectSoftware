@@ -23,6 +23,10 @@ public class NotificacionRepoImpl implements NotificacionRepo {
 
             return "Se ha sobreescrito la notificacion con id: "+ notificacion.getId();
 
+        }else{
+
+            singleton.crear("notificacion", notificacion);
+
         }
 
 
