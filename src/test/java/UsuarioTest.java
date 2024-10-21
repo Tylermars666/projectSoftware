@@ -47,7 +47,6 @@ public class UsuarioTest {
         Singleton.getInstance().crear("user",new Usuario("1717","Omar","Santander","3207368522", TipoUsuario.ADMINISTRADOR,
                 "imagen2Huella",null,"omar","0000"));
 
-
     }
 
     @Test

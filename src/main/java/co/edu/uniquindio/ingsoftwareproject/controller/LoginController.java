@@ -1,7 +1,9 @@
 package co.edu.uniquindio.ingsoftwareproject.controller;
 
+import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.LoginServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.LoginService;
+import co.edu.uniquindio.ingsoftwareproject.user.Alertas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,6 +55,7 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
         loginStage.close();
+        Alertas.alertar(TipoAlerta.INFORMATION,"Inicio de sesión", "Su sesión ha iniciado con éxito");
 
     }
 
