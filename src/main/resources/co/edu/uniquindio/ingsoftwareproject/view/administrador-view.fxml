@@ -43,8 +43,6 @@
                         <Label layoutX="16.0" layoutY="104.0" text="LOGIN" />
                         <Label layoutX="23.0" layoutY="150.0" text="UserName" />
                         <Label layoutX="26.0" layoutY="183.0" text="Password" />
-                        <TextField fx:id="txtRePasswordEmpleado" layoutX="97.0" layoutY="213.0" promptText="REPITA CONTRASEÑA" />
-                        <Label layoutX="26.0" layoutY="217.0" text="Password" />
                         <Button layoutX="272.0" layoutY="287.0" mnemonicParsing="false" onAction="#registrarEmpleado" prefHeight="41.0" prefWidth="144.0" text="Registrar">
                            <font>
                               <Font size="19.0" />

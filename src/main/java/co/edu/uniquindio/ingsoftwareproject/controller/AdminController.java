@@ -3,8 +3,10 @@ package co.edu.uniquindio.ingsoftwareproject.controller;
 import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.ActualizarEmpleadoDTO;
 import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.ControlTimexDTO;
 import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.NotificacionDTO;
+import co.edu.uniquindio.ingsoftwareproject.dto.userDto.CrearEmpleadoDTO;
 import co.edu.uniquindio.ingsoftwareproject.dto.userDto.ReporteDto;
 import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
+import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoUsuario;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.AdminServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.UserServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.AdminService;
@@ -65,8 +67,6 @@ public class AdminController implements Initializable {
     @FXML
     private TextField txtPasswordEmpleado;
     @FXML
-    private TextField txtRePasswordEmpleado;
-    @FXML
     private TextField txtRegistroUnicoTributarioEmpleado;
     @FXML
     private ComboBox<String> cmbTipoEmpleado;
@@ -105,6 +105,7 @@ public class AdminController implements Initializable {
         this.btnGenerarReporte.setDisable(false);
 
         controlRegistroSeleccionado = this.tblValidacionIO.getSelectionModel().getSelectedItem();
+        Alertas.alertar(TipoAlerta.INFORMATION,"Seleccion","Se ha seleccionado el registro con rut: "+controlRegistroSeleccionado.rut());
         this.txtRutUnEditable.setText(controlRegistroSeleccionado.rut());
         this.txtActualizarHoraEntrada.setText(controlRegistroSeleccionado.horaEntrada());
         this.txtActualizarHoraSalida.setText(controlRegistroSeleccionado.horaSalida());
@@ -116,10 +117,12 @@ public class AdminController implements Initializable {
 
 
         try{
-            adminService.actualizarEmpleado(new ActualizarEmpleadoDTO(
+            String response = adminService.actualizarEmpleado(new ActualizarEmpleadoDTO(
                     this.controlRegistroSeleccionado.dia(),this.controlRegistroSeleccionado.horaEntrada(),
                     this.controlRegistroSeleccionado.horaSalida(),this.controlRegistroSeleccionado.rut()
             ));
+            Alertas.alertar(TipoAlerta.INFORMATION,"Actualizacion",response);
+            this.registrosTimex.clear();
             actualizarTablaTimeX("");
         }catch (Exception e){
 
@@ -178,6 +181,45 @@ public class AdminController implements Initializable {
     @FXML
     void registrarEmpleado(ActionEvent event) {
 
+
+        String username = this.txtUserNameEmpleado.getText();
+        String password = this.txtPasswordEmpleado.getText();
+        String rut = this.txtRegistroUnicoTributarioEmpleado.getText();
+        String nombre = this.txtNombreCompletoEmpleado.getText();
+        String direccion = this.txtDireccionEmpleado.getText();
+        String telefono = this.txtTelefonoEmpleado.getText();
+        TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoSeleccionado);
+        String huella = "/co/edu/uniquindio/ingsoftwareproject/assets/Huellas/ImagenHuella4.jpg";
+
+        if(username==null || username.isBlank() || password==null || password.isBlank() ||
+                rut==null || rut.isBlank() || nombre==null || nombre.isBlank() ||
+                direccion==null || direccion.isBlank() || telefono==null || telefono.isBlank() ||
+        tipoSeleccionado==null || tipoSeleccionado.isBlank()){
+
+            Alertas.alertar(TipoAlerta.ERROR,"Campos en blanco","Asegurese de llenar todos los campos");
+
+        }else{
+
+            try{
+
+                String response = adminService.registrarEmpleado(new CrearEmpleadoDTO(username,
+                        password,rut,nombre,direccion,telefono,tipoUsuario,huella));
+                Alertas.alertar(TipoAlerta.INFORMATION,"Creacion", response);
+
+                this.txtUserNameEmpleado.setText("");
+                this.txtPasswordEmpleado.setText("");
+                this.txtRegistroUnicoTributarioEmpleado.setText("");
+                this.txtNombreCompletoEmpleado.setText("");
+                this.txtDireccionEmpleado.setText("");
+                this.txtTelefonoEmpleado.setText("");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
     @FXML
@@ -203,6 +245,7 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         this.tipoUsuarios = FXCollections.observableArrayList("CLIENTE", "ADMINISTRADOR");
+        this.cmbTipoEmpleado.setItems(tipoUsuarios);
 
 
         try{

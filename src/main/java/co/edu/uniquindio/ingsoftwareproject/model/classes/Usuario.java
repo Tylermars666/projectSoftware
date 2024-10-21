@@ -38,6 +38,7 @@ public class Usuario implements Serializable {
         this.huella = huella;
         this.userName = userName;
         this.password = password;
+        registros = new ArrayList<>();
         Registro registro = new Registro();
         registros.add(registro);
     }
