@@ -21,8 +21,8 @@ public class Registro implements Serializable {
 
     public Registro(){
 
-        entrada = LocalDateTime.parse("0000-00-00T00:00:00");
-        salida = LocalDateTime.parse("0000-00-00T00:00:00");
+        entrada = LocalDateTime.parse("1111-11-11T00:00:00");
+        salida = LocalDateTime.parse("1111-11-11T00:00:00");
     }
 
     public int getTotalHoras(){

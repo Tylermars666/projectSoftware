@@ -1,10 +1,14 @@
 package co.edu.uniquindio.ingsoftwareproject.controller;
 
+import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.ActualizarEmpleadoDTO;
 import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.ControlTimexDTO;
 import co.edu.uniquindio.ingsoftwareproject.dto.adminDto.NotificacionDTO;
+import co.edu.uniquindio.ingsoftwareproject.dto.userDto.ReporteDto;
 import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoAlerta;
 import co.edu.uniquindio.ingsoftwareproject.services.implement.AdminServiceImpl;
+import co.edu.uniquindio.ingsoftwareproject.services.implement.UserServiceImpl;
 import co.edu.uniquindio.ingsoftwareproject.services.interfaces.AdminService;
+import co.edu.uniquindio.ingsoftwareproject.services.interfaces.UserService;
 import co.edu.uniquindio.ingsoftwareproject.user.Alertas;
 import co.edu.uniquindio.ingsoftwareproject.user.UsuarioLoggeado;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,12 +16,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -76,11 +88,14 @@ public class AdminController implements Initializable {
     private Button btnActualizar;
     @FXML
     private Button btnGenerarReporte;
+    @FXML
+    private ImageView imgHuella;
 
     ObservableList<String> tipoUsuarios;
     ObservableList<ControlTimexDTO> registrosTimex;
     String tipoSeleccionado;
     AdminService adminService = new AdminServiceImpl();
+    UserService userService = new UserServiceImpl();
     ControlTimexDTO controlRegistroSeleccionado;
 
     @FXML
@@ -98,6 +113,19 @@ public class AdminController implements Initializable {
 
     @FXML
     void btnActualizarValidacionControlTimeX(ActionEvent event) {
+
+
+        try{
+            adminService.actualizarEmpleado(new ActualizarEmpleadoDTO(
+                    this.controlRegistroSeleccionado.dia(),this.controlRegistroSeleccionado.horaEntrada(),
+                    this.controlRegistroSeleccionado.horaSalida(),this.controlRegistroSeleccionado.rut()
+            ));
+            actualizarTablaTimeX("");
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -121,6 +149,30 @@ public class AdminController implements Initializable {
     @FXML
     void btnGenerarReporteValidacionControlTimeX(ActionEvent event) {
 
+        String fechaStr = controlRegistroSeleccionado.dia();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+        int mes = fecha.getMonthValue();
+
+        try{
+            ReporteDto reporteDto = userService.generarReporte(
+                    this.controlRegistroSeleccionado.rut(),
+                    mes
+            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/ingsoftwareproject/view/reporte-view.fxml"));
+
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Reporte");
+            stage.setScene(scene);
+            stage.show();
+            ReporteController controller = loader.getController();
+            controller.settearReporte(reporteDto);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -130,6 +182,12 @@ public class AdminController implements Initializable {
 
     @FXML
     void registrarHuellaEmpleado(ActionEvent event) {
+
+        //TODO
+        String imagePath = "/co/edu/uniquindio/ingsoftwareproject/assets/Huellas/ImagenHuella4.jpg";
+        Image image = new Image(getClass().getResourceAsStream(imagePath));
+
+        this.imgHuella.setImage(image);
 
     }
 
@@ -144,22 +202,14 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        tipoUsuarios = FXCollections.observableArrayList("Cliente","Administrador");
+        this.tipoUsuarios = FXCollections.observableArrayList("CLIENTE", "ADMINISTRADOR");
+
 
         try{
-
-            actualizarTablaNotificaciones();
+            actualizarTablaTimeX("");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try{
-
-            actualizarTablaTimeX("");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
 
     }
 
@@ -223,5 +273,6 @@ public class AdminController implements Initializable {
     }
 
 
-
+    public void SeleccionarRegistro(KeyEvent keyEvent) {
+    }
 }

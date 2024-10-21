@@ -7,6 +7,7 @@ import co.edu.uniquindio.ingsoftwareproject.repository.implement.UserRepoImpl;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,8 +39,12 @@ public class UsuarioTest {
     @Test
     public void serializar(){
 
+        Registro registro = new Registro();
+        ArrayList<Registro> registros = new ArrayList<>();
+        registros.add(registro);
+
         Singleton.getInstance().crear("user",new Usuario("666","Jaimito","cra 14","7327003", TipoUsuario.CLIENTE,
-                "imagen1Huella",null,"jaimito1","0000"));
+                "imagen1Huella",registros,"jaimito1","0000"));
 
         /*Singleton.getInstance().crear("notificacion",new Notificacion("888","666","Jaimito","Me enfermé de lepra",
                 LocalDateTime.now()));*/
@@ -49,7 +54,7 @@ public class UsuarioTest {
 
 
         Singleton.getInstance().crear("user",new Usuario("1718","Carlos","Tuluaquistán","Número privado", TipoUsuario.CLIENTE,
-                "ImagenHuella3",null,"carlos","0000"));
+                "ImagenHuella3",registros,"carlos","0000"));
 
 
     }
@@ -76,7 +81,6 @@ public class UsuarioTest {
 
 
         ArrayList<Registro> registros = new ArrayList<>();
-        registros.add(new Registro(LocalDateTime.now(),LocalDateTime.now().plusHours(8)));
         registros.add(new Registro(LocalDateTime.parse("2024-09-20T"+"07:31:06"),LocalDateTime.parse("2024-09-20T"+"17:31:06")));
         registros.add(new Registro(LocalDateTime.parse("2024-10-20T"+"07:31:06"),LocalDateTime.parse("2024-10-20T"+"17:31:06")));
         registros.add(new Registro(LocalDateTime.parse("2024-08-20T"+"07:31:06"),LocalDateTime.parse("2024-08-20T"+"17:31:06")));
@@ -91,7 +95,7 @@ public class UsuarioTest {
 
 
         //System.out.println(response);
-        System.out.println(response2);
+        //System.out.println(response2);
 
 
     }
@@ -125,6 +129,18 @@ public class UsuarioTest {
         LocalDateTime fecha3 = LocalDateTime.now().minusHours(8);
         System.out.println(fecha3);
 
+
+    }
+
+    @Test
+    public void fechaParse(){
+
+        String fechaStr = "2024-10-12";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+        int mes = fecha.getMonthValue();
+
+        System.out.println(mes);
 
     }
 

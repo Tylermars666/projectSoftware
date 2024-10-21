@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ControlTimexDTO> listarEmpleados() throws Exception {
 
-        List<Usuario> usuarios = userRepo.findAll();
+        List<Usuario> usuarios = userRepo.findAllUsersNotAdmin();
         return resumenEmpleados(usuarios);
     }
 

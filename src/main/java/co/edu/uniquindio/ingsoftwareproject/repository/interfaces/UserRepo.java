@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserRepo {
 
     public List<Usuario> findAll();
+    public List<Usuario> findAllUsersNotAdmin();
     public Usuario findByRut(String rut);
     public String save(Usuario usuario); //Este es para actualizar también
     public Usuario findByUsername(String username);

@@ -17,6 +17,14 @@ public class UserRepoImpl implements UserRepo {
     }
 
     @Override
+    public List<Usuario> findAllUsersNotAdmin() {
+
+        ArrayList<Usuario> users = (ArrayList<Usuario>) singleton.listar("user");
+
+        return filtrarUsuariosNoAdmin(users);
+    }
+
+    @Override
     public Usuario findByRut(String rut) {
 
         List<Usuario> usuariosCompletos = (List<Usuario>) singleton.listar("user");
@@ -72,5 +80,23 @@ public class UserRepoImpl implements UserRepo {
 
 
         return null;
+    }
+
+    //----------------------------METODO AUX---------------------
+
+    private List<Usuario> filtrarUsuariosNoAdmin(List<Usuario> usuarios) {
+
+        ArrayList<Usuario> usuariosFiltrados = new ArrayList<>();
+
+        for(Usuario usuario : usuarios) {
+
+            if(usuario.getTipo().toString().equals("CLIENTE")) {
+
+                usuariosFiltrados.add(usuario);
+
+            }
+        }
+        return usuariosFiltrados;
+
     }
 }
