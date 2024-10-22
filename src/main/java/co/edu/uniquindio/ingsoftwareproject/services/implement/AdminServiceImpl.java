@@ -56,7 +56,8 @@ public class AdminServiceImpl implements AdminService {
         Usuario usuario = Usuario.builder().rut(crearEmpleadoDTO.rut())
                 .nombre(crearEmpleadoDTO.nombre()).direccion(crearEmpleadoDTO.direccion())
                 .telefono(crearEmpleadoDTO.telefono()).tipo(crearEmpleadoDTO.tipoUsuario())
-                .huella(crearEmpleadoDTO.huella()).build();
+                .huella(crearEmpleadoDTO.huella()).userName(crearEmpleadoDTO.username())
+                .password(crearEmpleadoDTO.password()).build();
 
 
 

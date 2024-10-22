@@ -2,6 +2,7 @@ import co.edu.uniquindio.ingsoftwareproject.model.classes.Notificacion;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Registro;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Usuario;
 import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoUsuario;
+import co.edu.uniquindio.ingsoftwareproject.repository.Serializador;
 import co.edu.uniquindio.ingsoftwareproject.repository.Singleton;
 import co.edu.uniquindio.ingsoftwareproject.repository.implement.UserRepoImpl;
 import javafx.util.converter.LocalDateTimeStringConverter;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class UsuarioTest {
 
     UserRepoImpl userRepo = new UserRepoImpl();
+    Serializador serializador = new Serializador();
 
     @Test
     public void fechaHora(){
@@ -141,6 +143,15 @@ public class UsuarioTest {
         int mes = fecha.getMonthValue();
 
         System.out.println(mes);
+
+    }
+
+    @Test
+    public void eliminarUsuario(){
+
+        Usuario user = (Usuario) serializador.eliminarUsuario(new Usuario("6363","","","",null,"","",""));
+        System.out.println(user.getUserName());
+
 
     }
 
