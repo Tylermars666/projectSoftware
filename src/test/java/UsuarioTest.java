@@ -5,7 +5,6 @@ import co.edu.uniquindio.ingsoftwareproject.model.enums.TipoUsuario;
 import co.edu.uniquindio.ingsoftwareproject.repository.Serializador;
 import co.edu.uniquindio.ingsoftwareproject.repository.Singleton;
 import co.edu.uniquindio.ingsoftwareproject.repository.implement.UserRepoImpl;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

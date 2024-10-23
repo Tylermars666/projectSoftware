@@ -168,6 +168,7 @@ public class AdminServiceImpl implements AdminService {
             if(registroU.getFecha().equals(registro.getFecha())) {
 
                 usuario.getRegistros().remove(registroU);
+                break;
             }
 
         }

@@ -119,8 +119,8 @@ public class AdminController implements Initializable {
 
         try{
             String response = adminService.actualizarEmpleado(new ActualizarEmpleadoDTO(
-                    this.controlRegistroSeleccionado.dia(),this.controlRegistroSeleccionado.horaEntrada(),
-                    this.controlRegistroSeleccionado.horaSalida(),this.controlRegistroSeleccionado.rut()
+                    this.controlRegistroSeleccionado.dia(),this.txtActualizarHoraEntrada.getText(),
+                    this.txtActualizarHoraSalida.getText(),this.controlRegistroSeleccionado.rut()
             ));
             Alertas.alertar(TipoAlerta.INFORMATION,"Actualizacion",response);
             this.registrosTimex.clear();
