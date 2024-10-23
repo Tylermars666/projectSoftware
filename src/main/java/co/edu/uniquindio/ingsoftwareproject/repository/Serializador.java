@@ -2,7 +2,6 @@ package co.edu.uniquindio.ingsoftwareproject.repository;
 
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Notificacion;
 import co.edu.uniquindio.ingsoftwareproject.model.classes.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
